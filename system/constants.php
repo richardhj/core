@@ -58,17 +58,6 @@ define('SWITCH_ORDER', true);
  */
 define('VERSION', '2.11');
 define('BUILD', '12');
-define('LONG_TERM_SUPPORT', true);
-define('CODEMIRROR', '2.2');
-define('DATEPICKER', '2.1.1');
-define('HIGHLIGHTER', '3.0.83');
-define('HTML5SHIM', '3');
-define('MEDIABOX', '1.4.6');
-define('MOOTOOLS', '1.4.5');
-define('MOOTOOLS_CORE', MOOTOOLS);
-define('MOOTOOLS_MORE', '1.4.0.1');
-define('SLIMBOX', '1.71');
-define('TABLESORT', '1.3.1');
 
 
 /**
@@ -101,26 +90,5 @@ define('STRICT_MODE', true);
 define('LINK_BLUR', ' onclick="this.blur()"');
 define('LINK_NEW_WINDOW', ' onclick="return !window.open(this.href)"');
 define('LINK_NEW_WINDOW_BLUR', ' onclick="this.blur();return !window.open(this.href)"');
-
-
-/**
- * -------------------------------------------------------------------------
- * LOG CONSTANTS
- * -------------------------------------------------------------------------
- *
- * These constants can be used with method $this->log() to add log entries.
- * 
- * Usage example:
- *   $this->log('An error occured', 'FormGenerator execute()', TL_ERROR);
- */
-define('TL_ERROR', 'ERROR');
-define('TL_ACCESS', 'ACCESS');
-define('TL_GENERAL', 'GENERAL');
-define('TL_FILES', 'FILES');
-define('TL_CRON', 'CRON');
-define('TL_FORMS', 'FORMS');
-define('TL_CONFIGURATION', 'CONFIGURATION');
-define('TL_NEWSLETTER', 'NEWSLETTER');
-define('TL_REPOSITORY', 'REPOSITORY');
 
 ?>

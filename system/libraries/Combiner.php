@@ -79,6 +79,7 @@ class Combiner extends System
 	 * @param string
 	 * @param string
 	 * @param string
+     * @throws Exception
 	 */
 	public function add($strFile, $strVersion=null, $strMedia='screen')
 	{
@@ -104,19 +105,6 @@ class Combiner extends System
 		if (isset($this->arrFiles[$strFile]))
 		{
 			return;
-		}
-
-		// Check the source file
-		if (!file_exists(TL_ROOT . '/' . $strFile))
-		{
-			$this->import('StyleSheets');
-			$this->StyleSheets->updateStyleSheets();
-
-			// Retry
-			if (!file_exists(TL_ROOT . '/' . $strFile))
-			{
-				throw new Exception("File $strFile does not exist");
-			}
 		}
 
 		// Default version
@@ -153,7 +141,7 @@ class Combiner extends System
 	 * @param string
 	 * @return string
 	 */
-	public function getCombinedFile($strUrl=TL_SCRIPT_URL)
+	public function getCombinedFile($strUrl)
 	{
 		$strKey = substr(md5($this->strKey), 0, 12);
 

@@ -65,13 +65,10 @@
 $GLOBALS['TL_CONFIG']['websiteTitle']   = 'Contao Open Source CMS';
 $GLOBALS['TL_CONFIG']['characterSet']   = 'utf-8';
 $GLOBALS['TL_CONFIG']['adminEmail']     = '';
-$GLOBALS['TL_CONFIG']['enableSearch']   = true;
-$GLOBALS['TL_CONFIG']['indexProtected'] = false;
 $GLOBALS['TL_CONFIG']['displayErrors']  = false;
 $GLOBALS['TL_CONFIG']['logErrors']      = true;
 $GLOBALS['TL_CONFIG']['rewriteURL']     = false;
 $GLOBALS['TL_CONFIG']['disableAlias']   = false;
-$GLOBALS['TL_CONFIG']['minifyMarkup']   = false;
 $GLOBALS['TL_CONFIG']['gzipScripts']    = false;
 
 
@@ -195,7 +192,6 @@ $GLOBALS['TL_CONFIG']['encryptionCipher'] = 'rijndael-256';
  *
  * Please enter how many upload fields you want to show in the back end.
  */
-$GLOBALS['TL_CONFIG']['uploadPath']     = 'tl_files';
 $GLOBALS['TL_CONFIG']['uploadTypes']    = 'jpg,jpeg,gif,png,ico,csv,doc,docx,xls,xlsx,ppt,pptx,odt,ods,odp,pdf,mp3,mp4,m4a,m4v,webm,ogg,wma,wmv,ram,rm,mov,fla,flv,swf,css,html,htm,txt,zip,cto';
 $GLOBALS['TL_CONFIG']['maxFileSize']    = 2048000;
 $GLOBALS['TL_CONFIG']['imageWidth']     = 800;
@@ -239,29 +235,9 @@ $GLOBALS['TL_CONFIG']['smtpPort'] = 25;
  *   sessionTimeout = period of time sessions are kept (default: 1 hour)
  *   lockPeriod     = period of time an account is locked (default: 5 minutes)
  */
-$GLOBALS['TL_CONFIG']['undoPeriod']     = 86400;
-$GLOBALS['TL_CONFIG']['versionPeriod']  = 7776000;
 $GLOBALS['TL_CONFIG']['logPeriod']      = 1209600;
 $GLOBALS['TL_CONFIG']['sessionTimeout'] = 3600;
 $GLOBALS['TL_CONFIG']['lockPeriod']     = 300;
-
-
-/**
- * -------------------------------------------------------------------------
- * DEFAULT USER CONFIGURATION
- * -------------------------------------------------------------------------
- *
- *   showHelp    = show a help text after each input field
- *   thumbnails  = show image thumbnails in the file manager
- *   debugMode   = debug the system and print results to the screen
- *   useRTE      = use the rich text editor (TinyMCE)
- *   useCE       = use the code editor (CodeMirror)
- */
-$GLOBALS['TL_CONFIG']['showHelp']   = true;
-$GLOBALS['TL_CONFIG']['thumbnails'] = true;
-$GLOBALS['TL_CONFIG']['debugMode']  = false;
-$GLOBALS['TL_CONFIG']['useRTE']     = true;
-$GLOBALS['TL_CONFIG']['useCE']      = true;
 
 
 /**
@@ -293,43 +269,14 @@ $GLOBALS['TL_CONFIG']['useCE']      = true;
  * The default install tool password is "contao". Please make sure to change
  * this password during the installation process.
  */
-$GLOBALS['TL_CONFIG']['resultsPerPage']       = 30;
-$GLOBALS['TL_CONFIG']['maxResultsPerPage']    = 500;
-$GLOBALS['TL_CONFIG']['customSections']       = '';
 $GLOBALS['TL_CONFIG']['maxImageWidth']        = '';
-$GLOBALS['TL_CONFIG']['defaultUser']          = 0;
-$GLOBALS['TL_CONFIG']['defaultGroup']         = 0;
-$GLOBALS['TL_CONFIG']['defaultChmod']         = array('u1', 'u2', 'u3', 'u4', 'u5', 'u6', 'g4', 'g5', 'g6');
 $GLOBALS['TL_CONFIG']['validImageTypes']      = 'jpg,jpeg,gif,png,tif,tiff,bmp';
-$GLOBALS['TL_CONFIG']['editableFiles']        = 'htm,html,css,js,txt,log,xml';
 $GLOBALS['TL_CONFIG']['templateFiles']        = 'tpl,html5,xhtml';
 $GLOBALS['TL_CONFIG']['allowedDownload']      = 'jpg,jpeg,gif,png,doc,docx,xls,xlsx,ppt,pptx,odt,ods,odp,pdf,mp3,mp4,m4a,m4v,webm,ogg,wma,wmv,ram,rm,mov,zip';
-$GLOBALS['TL_CONFIG']['installPassword']      = '4d19f112e30930cbe278de966e9b2d907568d1c8';
-$GLOBALS['TL_CONFIG']['liveUpdateBase']       = 'http://www.inetrobots.com/liveupdate/';
-$GLOBALS['TL_CONFIG']['repository_wsdl']      = 'http://contao.org/services/repository.wsdl';
-$GLOBALS['TL_CONFIG']['repository_languages'] = 'en,de';
-$GLOBALS['TL_CONFIG']['repository_listsize']  = 10;
-$GLOBALS['TL_CONFIG']['backendTheme']         = 'default';
 $GLOBALS['TL_CONFIG']['inactiveModules']      = '';
-$GLOBALS['TL_CONFIG']['liveUpdateId']         = '';
-$GLOBALS['TL_CONFIG']['disableInsertTags']    = false;
-$GLOBALS['TL_CONFIG']['rootFiles']            = array();
-$GLOBALS['TL_CONFIG']['doNotCollapse']        = false;
 $GLOBALS['TL_CONFIG']['urlSuffix']            = '.html';
-$GLOBALS['TL_CONFIG']['exampleWebsite']       = '';
-$GLOBALS['TL_CONFIG']['minPasswordLength']    = 8;
-$GLOBALS['TL_CONFIG']['cacheMode']            = 'both';
-$GLOBALS['TL_CONFIG']['autologin']            = 7776000;
-$GLOBALS['TL_CONFIG']['staticFiles']          = '';
-$GLOBALS['TL_CONFIG']['staticSystem']         = '';
-$GLOBALS['TL_CONFIG']['staticPlugins']        = '';
-$GLOBALS['TL_CONFIG']['disableCron']          = false;
 $GLOBALS['TL_CONFIG']['coreOnlyMode']         = false;
 $GLOBALS['TL_CONFIG']['addLanguageToUrl']     = false;
-$GLOBALS['TL_CONFIG']['doNotRedirectEmpty']   = false;
-$GLOBALS['TL_CONFIG']['useAutoItem']          = false;
-$GLOBALS['TL_CONFIG']['privacyAnonymizeIp']   = true;
-$GLOBALS['TL_CONFIG']['privacyAnonymizeGA']   = true;
 $GLOBALS['TL_CONFIG']['defaultFileChmod']     = 0644;
 $GLOBALS['TL_CONFIG']['defaultFolderChmod']   = 0755;
 

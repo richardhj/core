@@ -264,16 +264,10 @@ abstract class System
 		$return = preg_replace('/(&(amp;)?|\?)tg=[^& ]*/i', '', (($session['current'] != $this->Environment->requestUri) ? $session['current'] : $session['last']));
 		$return = preg_replace('/^'.preg_quote(TL_PATH, '/').'\//i', '', $return);
 
-		// Fallback to the generic referer in the front end
-		if ($return == '' && TL_MODE == 'FE')
-		{
-			$return = $this->Environment->httpReferer;
-		}
-
-		// Fallback to the current URL if there is no referer
+		// Fallback to the generic referer or current URL if there is no referer
 		if ($return == '')
 		{
-			$return = (TL_MODE == 'BE') ? 'contao/main.php' : $this->Environment->url;
+			$return = ($this->Environment->httpReferer) ?: $this->Environment->url;
 		}
 
 		// Do not urldecode here!

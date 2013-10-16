@@ -70,10 +70,6 @@ if (file_exists(TL_ROOT . '/system/config/pathconfig.php'))
 {
 	define('TL_PATH', include TL_ROOT . '/system/config/pathconfig.php');
 }
-elseif (TL_MODE == 'BE')
-{
-	define('TL_PATH', preg_replace('/\/contao\/[^\/]*$/i', '', $objEnvironment->requestUri));
-}
 else
 {
 	define('TL_PATH', null); // cannot be reliably determined

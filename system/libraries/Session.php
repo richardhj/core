@@ -58,20 +58,7 @@ class Session
 	 */
 	protected function __construct()
 	{
-		switch (TL_MODE)
-		{
-			case 'BE':
-				$this->arrSession = $_SESSION['BE_DATA'];
-				break;
-
-			case 'FE':
-				$this->arrSession = $_SESSION['FE_DATA'];
-				break;
-
-			default:
-				$this->arrSession = $_SESSION;
-				break;
-		}
+		$this->arrSession = $_SESSION;
 	}
 
 
@@ -80,20 +67,7 @@ class Session
 	 */
 	public function __destruct()
 	{
-		switch (TL_MODE)
-		{
-			case 'BE':
-				$_SESSION['BE_DATA'] = $this->arrSession;
-				break;
-
-			case 'FE':
-				$_SESSION['FE_DATA'] = $this->arrSession;
-				break;
-
-			default:
-				$_SESSION = $this->arrSession;
-				break;
-		}
+		$_SESSION = $this->arrSession;
 	}
 
 

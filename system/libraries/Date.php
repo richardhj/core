@@ -482,16 +482,6 @@ class Date extends System
 	 */
 	public function getNumericDateFormat()
 	{
-		if (TL_MODE == 'FE')
-		{
-			global $objPage;
-
-			if ($objPage->dateFormat != '' && $this->isNumericFormat($objPage->dateFormat))
-			{
-				return $objPage->dateFormat;
-			}
-		}
-
 		return $GLOBALS['TL_CONFIG']['dateFormat'];
 	}
 
@@ -502,16 +492,6 @@ class Date extends System
 	 */
 	public function getNumericTimeFormat()
 	{
-		if (TL_MODE == 'FE')
-		{
-			global $objPage;
-
-			if ($objPage->timeFormat != '' && $this->isNumericFormat($objPage->timeFormat))
-			{
-				return $objPage->timeFormat;
-			}
-		}
-
 		return $GLOBALS['TL_CONFIG']['timeFormat'];
 	}
 
@@ -522,16 +502,6 @@ class Date extends System
 	 */
 	public function getNumericDatimFormat()
 	{
-		if (TL_MODE == 'FE')
-		{
-			global $objPage;
-
-			if ($objPage->datimFormat != '' && $this->isNumericFormat($objPage->datimFormat))
-			{
-				return $objPage->datimFormat;
-			}
-		}
-
 		return $GLOBALS['TL_CONFIG']['datimFormat'];
 	}
 }

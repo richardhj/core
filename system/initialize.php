@@ -36,11 +36,10 @@ define('TL_ROOT', dirname(dirname(__FILE__)));
 
 
 /**
- * Include functions, constants and interfaces
+ * Include functions and constants
  */
 require(TL_ROOT . '/system/functions.php');
 require(TL_ROOT . '/system/constants.php');
-require(TL_ROOT . '/system/interface.php');
 
 
 /**
@@ -143,42 +142,6 @@ if (TL_PATH !== null && !file_exists(TL_ROOT . '/system/config/pathconfig.php'))
 if (USE_MBSTRING && function_exists('mb_regex_encoding'))
 {
 	mb_regex_encoding($GLOBALS['TL_CONFIG']['characterSet']);
-}
-
-
-/**
- * Set the default language
- */
-if ($objInput->post('language'))
-{
-	$GLOBALS['TL_LANGUAGE'] = $objInput->post('language');
-}
-elseif (isset($_SESSION['TL_LANGUAGE']))
-{
-	$GLOBALS['TL_LANGUAGE'] = $_SESSION['TL_LANGUAGE'];
-}
-else
-{
-	foreach ($objEnvironment->httpAcceptLanguage as $v)
-	{
-		if (is_dir(TL_ROOT . '/system/modules/backend/languages/' . $v))
-		{
-			$GLOBALS['TL_LANGUAGE'] = $v;
-			$_SESSION['TL_LANGUAGE'] = $v;
-			break;
-		}
-	}
-
-	unset($v);
-}
-
-
-/**
- * Include the custom initialization file
- */
-if (file_exists(TL_ROOT . '/system/config/initconfig.php'))
-{
-	include(TL_ROOT . '/system/config/initconfig.php');
 }
 
 

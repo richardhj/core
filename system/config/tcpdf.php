@@ -31,11 +31,11 @@
 
 /**
  * This is the TCPDF (PDF generator) configuration file. See
- * plugins/tcpdf for more information.
+ * system/plugins/tcpdf for more information.
  */
 define('K_TCPDF_EXTERNAL_CONFIG', true);
-define('K_PATH_MAIN', TL_ROOT . '/plugins/tcpdf/');
-define('K_PATH_URL', $this->Environment->base . 'plugins/tcpdf/');
+define('K_PATH_MAIN', TL_ROOT . '/system/plugins/tcpdf/');
+define('K_PATH_URL', $this->Environment->base . 'system/plugins/tcpdf/');
 define('K_PATH_FONTS', K_PATH_MAIN . 'fonts/');
 define('K_PATH_CACHE', TL_ROOT . '/system/tmp/');
 define('K_PATH_URL_CACHE', TL_ROOT . '/system/tmp/');

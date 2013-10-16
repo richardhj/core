@@ -479,12 +479,11 @@ abstract class Controller extends System
 		// TCPDF configuration
 		$l['a_meta_dir'] = 'ltr';
 		$l['a_meta_charset'] = $GLOBALS['TL_CONFIG']['characterSet'];
-		$l['a_meta_language'] = $GLOBALS['TL_LANGUAGE'];
 		$l['w_page'] = 'page';
 
 		// Include library
 		require_once(TL_ROOT . '/system/config/tcpdf.php');
-		require_once(TL_ROOT . '/plugins/tcpdf/tcpdf.php');
+		require_once(TL_ROOT . '/system/plugins/tcpdf/tcpdf.php');
 
 		// Create new PDF document
 		$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true);

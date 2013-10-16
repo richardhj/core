@@ -60,13 +60,6 @@ class RequestToken extends System
 	{
 		$this->strToken = @$_SESSION['REQUEST_TOKEN'];
 
-		// Backwards compatibility
-		if (is_array($this->strToken))
-		{
-			$this->strToken = null;
-			unset($_SESSION['REQUEST_TOKEN']);
-		}
-
 		// Generate a new token
 		if ($this->strToken == '')
 		{

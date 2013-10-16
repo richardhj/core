@@ -83,12 +83,6 @@ abstract class System
 	protected $Input;
 
 	/**
-	 * Search object
-	 * @var Search
-	 */
-	protected $Search;
-
-	/**
 	 * Session object
 	 * @var Session
 	 */
@@ -101,36 +95,6 @@ abstract class System
 	protected $String;
 
 	/**
-	 * Template object
-	 * @var Template
-	 */
-	protected $Template;
-
-	/**
-	 * User object
-	 * @var User
-	 */
-	protected $User;
-
-	/**
-	 * Automator object
-	 * @var Automator
-	 */
-	protected $Automator;
-
-	/**
-	 * Data container object
-	 * @var DataContainer
-	 */
-	protected $DataContainer;
-
-	/**
-	 * Messages object
-	 * @var Messages
-	 */
-	protected $Messages;
-
-	/**
 	 * Cookie hook object
 	 * @var object
 	 */
@@ -141,12 +105,6 @@ abstract class System
 	 * @var object
 	 */
 	protected $objLog;
-
-	/**
-	 * Cache array
-	 * @var array
-	 */
-	protected $arrCache = array(); // Backwards compatibility
 
 
 	/**
@@ -174,43 +132,6 @@ abstract class System
 		if ($blnForce || !is_object($this->$strKey))
 		{
 			$this->$strKey = (in_array('getInstance', get_class_methods($strClass))) ? call_user_func(array($strClass, 'getInstance')) : new $strClass();
-		}
-	}
-
-
-	/**
-	 * Add a log entry
-	 * @param string
-	 * @param string
-	 * @param string
-	 */
-	protected function log($strText, $strFunction, $strAction)
-	{
-		$this->import('Database');
-
-		$strUa = 'N/A';
-		$strIp = '127.0.0.1';
-
-		if ($this->Environment->httpUserAgent)
-		{
-			$strUa = $this->Environment->httpUserAgent;
-		}
-		if ($this->Environment->remoteAddr)
-		{
-			$strIp = $this->anonymizeIp($this->Environment->remoteAddr);
-		}
-
-		$this->Database->prepare("INSERT INTO tl_log (tstamp, source, action, username, text, func, ip, browser) VALUES(?, ?, ?, ?, ?, ?, ?, ?)")
-					   ->execute(time(), (TL_MODE == 'FE' ? 'FE' : 'BE'), $strAction, ($GLOBALS['TL_USERNAME'] ? $GLOBALS['TL_USERNAME'] : ''), specialchars($strText), $strFunction, $strIp, $strUa);
-
-		// HOOK: allow to add custom loggers
-		if (isset($GLOBALS['TL_HOOKS']['addLogEntry']) && is_array($GLOBALS['TL_HOOKS']['addLogEntry']))
-		{
-			foreach ($GLOBALS['TL_HOOKS']['addLogEntry'] as $callback)
-			{
-				$this->import($callback[0], 'objLog'); // see #4414
-				$this->objLog->$callback[1]($strText, $strFunction, $strAction);
-			}
 		}
 	}
 
@@ -330,7 +251,7 @@ abstract class System
 	 */
 	protected function getReferer($blnEncodeAmpersands=false, $strTable=null)
 	{
-		$key = ($this->Environment->script == 'contao/files.php') ? 'fileReferer' : 'referer';
+		$key = 'referer';
 		$session = $this->Session->get($key);
 
 		// Use a specific referer
@@ -376,75 +297,6 @@ abstract class System
 		}
 
 		return ampersand($strRequest, $blnAmpersand);
-	}
-
-
-	/**
-	 * Load a set of language files
-	 * @param string
-	 * @param boolean
-	 * @param boolean
-	 */
-	protected function loadLanguageFile($strName, $strLanguage=false, $blnNoCache=false)
-	{
-		if (!$strLanguage)
-		{
-			$strLanguage = $GLOBALS['TL_LANGUAGE'];
-		}
-
-		// Return if the data has been loaded already
-		if (!$blnNoCache && isset($GLOBALS['loadLanguageFile'][$strName][$strLanguage]))
-		{
-			return;
-		}
-
-		// Use a global cache variable to support nested calls
-		$GLOBALS['loadLanguageFile'][$strName][$strLanguage] = true;
-
-		// Parse all active modules
-		foreach ($this->Config->getActiveModules() as $strModule)
-		{
-			$strFallback = sprintf('%s/system/modules/%s/languages/en/%s.php', TL_ROOT, $strModule, $strName);
-
-			if (file_exists($strFallback))
-			{
-				include($strFallback);
-			}
-
-			if ($strLanguage == 'en')
-			{
-				continue;
-			}
-
-			$strFile = sprintf('%s/system/modules/%s/languages/%s/%s.php', TL_ROOT, $strModule, $strLanguage, $strName);
-
-			if (file_exists($strFile))
-			{
-				include($strFile);
-			}
-		}
-
-		// HOOK: allow to load custom labels
-		if (isset($GLOBALS['TL_HOOKS']['loadLanguageFile']) && is_array($GLOBALS['TL_HOOKS']['loadLanguageFile']))
-		{
-			foreach ($GLOBALS['TL_HOOKS']['loadLanguageFile'] as $callback)
-			{
-				$this->import($callback[0]);
-				$this->$callback[0]->$callback[1]($strName, $strLanguage);
-			}
-		}
-
-		// Handle single quotes in the deleteConfirm message
-		if ($strName == 'default')
-		{
-			$GLOBALS['TL_LANG']['MSC']['deleteConfirm'] = str_replace("'", "\\'", $GLOBALS['TL_LANG']['MSC']['deleteConfirm']);
-		}
-
-		// Local configuration file
-		if (file_exists(TL_ROOT . '/system/config/langconfig.php'))
-		{
-			include(TL_ROOT . '/system/config/langconfig.php');
-		}
 	}
 
 
@@ -527,156 +379,6 @@ abstract class System
 
 
 	/**
-	 * Add an error message
-	 * @param string
-	 */
-	protected function addErrorMessage($strMessage)
-	{
-		$this->addMessage($strMessage, 'TL_ERROR');
-	}
-
-
-	/**
-	 * Add a confirmation message
-	 * @param string
-	 */
-	protected function addConfirmationMessage($strMessage)
-	{
-		$this->addMessage($strMessage, 'TL_CONFIRM');
-	}
-
-
-	/**
-	 * Add a new message
-	 * @param string
-	 */
-	protected function addNewMessage($strMessage)
-	{
-		$this->addMessage($strMessage, 'TL_NEW');
-	}
-
-
-	/**
-	 * Add an info message
-	 * @param string
-	 */
-	protected function addInfoMessage($strMessage)
-	{
-		$this->addMessage($strMessage, 'TL_INFO');
-	}
-
-
-	/**
-	 * Add a raw message
-	 * @param string
-	 */
-	protected function addRawMessage($strMessage)
-	{
-		$this->addMessage($strMessage, 'TL_RAW');
-	}
-
-
-	/**
-	 * Add a message
-	 * @param string
-	 * @param string
-	 * @throws Exception
-	 */
-	protected function addMessage($strMessage, $strType)
-	{
-		if ($strMessage == '')
-		{
-			return;
-		}
-
-		if (!in_array($strType, $this->getMessageTypes()))
-		{
-			throw new Exception("Invalid message type $strType");
-		}
-
-		if (!is_array($_SESSION[$strType]))
-		{
-			$_SESSION[$strType] = array();
-		}
-
-		$_SESSION[$strType][] = $strMessage;
-	}
-
-
-	/**
-	 * Return all messages as HTML
-	 * @param boolean
-	 * @param boolean
-	 * @return string
-	 */
-	protected function getMessages($blnDcLayout=false, $blnNoWrapper=false)
-	{
-		$strMessages = '';
-
-		// Regular messages
-		foreach ($this->getMessageTypes() as $strType)
-		{
-			if (!is_array($_SESSION[$strType]))
-			{
-				continue;
-			}
-
-			$strClass = strtolower($strType);
-			$_SESSION[$strType] = array_unique($_SESSION[$strType]);
-
-			foreach ($_SESSION[$strType] as $strMessage)
-			{
-				if ($strType == 'TL_RAW')
-				{
-					$strMessages .= $strMessage;
-				}
-				else
-				{
-					$strMessages .= sprintf('<p class="%s">%s</p>%s', $strClass, $strMessage, "\n");
-				}
-			}
-
-			if (!$_POST)
-			{
-				$_SESSION[$strType] = array();
-			}
-		}
-
-		$strMessages = trim($strMessages);
-
-		// Wrapping container
-		if (!$blnNoWrapper && $strMessages != '')
-		{
-			$strMessages = sprintf('%s<div class="tl_message">%s%s%s</div>%s', ($blnDcLayout ? "\n\n" : "\n"), "\n", $strMessages, "\n", ($blnDcLayout ? '' : "\n"));
-		}
-
-		return $strMessages;
-	}
-
-
-	/**
-	 * Reset the message system
-	 */
-	protected function resetMessages()
-	{
-		foreach ($this->getMessageTypes() as $strType)
-		{
-			$_SESSION[$strType] = array();
-		}
-	} 
-
-
-	/**
-	 * Return all available message types
-	 * @return array
-	 */
-	protected function getMessageTypes()
-	{
-		return array('TL_ERROR', 'TL_CONFIRM', 'TL_NEW', 'TL_INFO', 'TL_RAW');
-	}
-
-
-	/**
 	 * Urlencode an image path preserving slashes
 	 * @param string
 	 * @return string
@@ -749,23 +451,6 @@ abstract class System
 
 
 	/**
-	 * Encode an internationalized domain name
-	 * @param string
-	 * @return string
-	 */
-	protected function idnaEncode($strDomain)
-	{
-		if (!class_exists('idna_convert', false))
-		{
-			require_once(TL_ROOT . '/plugins/idna/idna_convert.class.php');
-		}
-
-		$objIdn = new idna_convert();
-		return $objIdn->encode($strDomain);
-	}
-
-
-	/**
 	 * Decode an internationalized domain name
 	 * @param string
 	 * @return string
@@ -774,7 +459,7 @@ abstract class System
 	{
 		if (!class_exists('idna_convert', false))
 		{
-			require_once(TL_ROOT . '/plugins/idna/idna_convert.class.php');
+			require_once(TL_ROOT . '/system/plugins/idna/idna_convert.class.php');
 		}
 
 		$objIdn = new idna_convert();

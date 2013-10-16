@@ -26,7 +26,7 @@ class TestClass extends Controller
 	 * Example function
 	 * @return string
 	 */
-	protected function example()
+	public function example()
 	{
 		return 'Hello World!';
 	}
